@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class ProductsViewController: UIViewController, UITableViewDataSource {
+final class ProductsViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
     private let api = FakeStoreAPI()
     
@@ -26,6 +26,7 @@ final class ProductsViewController: UIViewController, UITableViewDataSource {
         title = "Products"
         productsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         productsTableView.dataSource = self
+        productsTableView.delegate = self
         setupUI()
     }
     
@@ -60,6 +61,20 @@ extension ProductsViewController {
         let product = products[indexPath.row]
         cell.textLabel?.text = product.title
         return cell
+    }
+}
+
+// MARK: - UITableViewDelegate Methods
+
+extension ProductsViewController {
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+        // ...
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
     }
 }
 
