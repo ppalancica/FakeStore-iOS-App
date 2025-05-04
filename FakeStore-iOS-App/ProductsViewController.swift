@@ -13,6 +13,8 @@ final class ProductsViewController: UIViewController, UITableViewDataSource {
     
     private var products: [FakeStoreAPI.Product] = []
     
+    private let cellIdentifier = String(describing: UITableViewCell.self)
+    
     private let productsTableView: UITableView = {
         let tableView = UITableView()
         return tableView
@@ -22,6 +24,7 @@ final class ProductsViewController: UIViewController, UITableViewDataSource {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Products"
+        productsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         productsTableView.dataSource = self
         setupUI()
     }
@@ -47,12 +50,13 @@ final class ProductsViewController: UIViewController, UITableViewDataSource {
 // MARK: - UITableViewDataSource Methods
 
 extension ProductsViewController {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return products.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)!
         let product = products[indexPath.row]
         cell.textLabel?.text = product.title
         return cell
