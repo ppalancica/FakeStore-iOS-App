@@ -7,9 +7,11 @@
 
 import Foundation
 
-enum FakeStoreAPIError: Error {
-    case invalidRequest
-    case invalidResponse
-    case invalidData
-    case jsonDecoding
+extension FakeStoreAPI {
+    enum FakeStoreAPIError: Error {
+        case invalidRequest
+        case invalidResponse
+        case invalidData
+        case jsonDecoding
+    }
 }

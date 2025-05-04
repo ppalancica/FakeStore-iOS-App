@@ -7,10 +7,12 @@
 
 import Foundation
 
-struct Product: Decodable {
-    let id: Int
-    let title: String
-    let price: Float
-    let description: String
-    let image: String
+extension FakeStoreAPI {
+    struct Product: Decodable {
+        let id: Int
+        let title: String
+        let price: Float
+        let description: String
+        let image: String
+    }
 }
