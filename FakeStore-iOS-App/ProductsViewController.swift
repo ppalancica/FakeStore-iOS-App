@@ -28,7 +28,12 @@ private extension ProductsViewController {
     
     func fetchProducts() {
         api.getProducts { products, error in
-            
+            if let products {
+                print("Products: \(products)")
+            }
+            if let error {
+                print("JSON decoding error: \(error)")
+            }
         }
     }
 }

@@ -9,14 +9,19 @@
 
 import Foundation
 
-struct Product {
-    let name: String
+struct Product: Decodable {
+    let id: Int
+    let title: String
     let price: Float
+    let description: String
+    let image: String
 }
 
 enum FakeStoreAPIError: Error {
-    case networkError
-    case serverError
+    case invalidRequest
+    case invalidResponse
+    case invalidData
+    case jsonDecoding
 }
 
 final class FakeStoreAPI {
@@ -32,28 +37,29 @@ final class FakeStoreAPI {
         let urlRequest = URLRequest(url: productsUrl)
         
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+            // Check if there is no error
             guard error == nil else {
-                completion(nil, .networkError)
+                completion(nil, .invalidRequest)
                 return
             }
             
-            guard let data, let response else {
-                completion(nil, .serverError)
+            // Check if Response and Data are valid
+            guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
+                completion(nil, .invalidResponse)
                 return
             }
-            
-            // Process Data and Response...
-            
-            print("data: ", data)
-            print("response: ", response)
-            
-            let products: [Product] = [
-                .init(name: "Shoes", price: 180),
-                .init(name: "T-shirt", price: 25),
-                .init(name: "Jeans", price: 100)
-            ]
-            
-            completion(products, nil)
+            guard let data else {
+                completion(nil, .invalidData)
+                return
+            }
+
+            // Decode Data containing JSON representation of Products
+            do {
+                let products = try JSONDecoder().decode([Product].self, from: data)
+                completion(products, nil)
+            } catch {
+                completion(nil, .jsonDecoding)
+            }
         }
         
         task.resume()
