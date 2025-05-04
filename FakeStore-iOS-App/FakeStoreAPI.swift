@@ -32,17 +32,20 @@ final class FakeStoreAPI {
         let urlRequest = URLRequest(url: productsUrl)
         
         let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
-            guard error != nil else {
+            guard error == nil else {
                 completion(nil, .networkError)
                 return
             }
             
-            guard let _ = data, let _ = response else {
+            guard let data, let response else {
                 completion(nil, .serverError)
                 return
             }
             
             // Process Data and Response...
+            
+            print("data: ", data)
+            print("response: ", response)
             
             let products: [Product] = [
                 .init(name: "Shoes", price: 180),
