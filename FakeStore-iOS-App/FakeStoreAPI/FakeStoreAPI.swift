@@ -9,21 +9,6 @@
 
 import Foundation
 
-struct Product: Decodable {
-    let id: Int
-    let title: String
-    let price: Float
-    let description: String
-    let image: String
-}
-
-enum FakeStoreAPIError: Error {
-    case invalidRequest
-    case invalidResponse
-    case invalidData
-    case jsonDecoding
-}
-
 final class FakeStoreAPI {
     
     private let baseUrlString = "https://fakestoreapi.com"
