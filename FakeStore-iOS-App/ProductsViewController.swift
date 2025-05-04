@@ -13,7 +13,7 @@ final class ProductsViewController: UIViewController, UITableViewDataSource, UIT
     
     private var products: [FakeStoreAPI.Product] = []
     
-    private let cellIdentifier = String(describing: UITableViewCell.self)
+    private let cellIdentifier = String(describing: ProductTableViewCell.self)
     
     private let productsTableView: UITableView = {
         let tableView = UITableView()
@@ -24,7 +24,7 @@ final class ProductsViewController: UIViewController, UITableViewDataSource, UIT
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Products"
-        productsTableView.register(UITableViewCell.self, forCellReuseIdentifier: cellIdentifier)
+        productsTableView.register(ProductTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         productsTableView.dataSource = self
         productsTableView.delegate = self
         setupUI()
@@ -57,9 +57,9 @@ extension ProductsViewController {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier)!
+        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier) as! ProductTableViewCell
         let product = products[indexPath.row]
-        cell.textLabel?.text = product.title
+        cell.configureWithProduct(product)
         return cell
     }
 }
@@ -74,7 +74,7 @@ extension ProductsViewController {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80
+        return UITableView.automaticDimension
     }
 }
 
