@@ -23,6 +23,7 @@ final class ProductsViewController: UIViewController, UITableViewDataSource, UIT
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        view.backgroundColor = .white
         title = "Products"
         productsTableView.register(ProductTableViewCell.self, forCellReuseIdentifier: cellIdentifier)
         productsTableView.dataSource = self

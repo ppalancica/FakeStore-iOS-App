@@ -15,7 +15,7 @@ final class RootViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         title = "Root"
-        self.view.backgroundColor = .lightGray
+        view.backgroundColor = .lightGray
     }
     
     override func viewDidAppear(_ animated: Bool) {
