@@ -86,7 +86,7 @@ private extension ProductsViewController {
     func fetchProducts() {
         api.getProducts { products, error in
             if let products {
-                print("Products: \(products)")
+                dump(products)
                 DispatchQueue.main.async {
                     self.products = products
                     self.productsTableView.reloadData()
