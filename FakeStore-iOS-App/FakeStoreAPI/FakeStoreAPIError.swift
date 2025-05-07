@@ -9,7 +9,8 @@ import Foundation
 
 extension FakeStoreAPI {
     enum FakeStoreAPIError: Error {
-        case invalidRequest
+        case invalidUrl
+        case networkIssue
         case invalidResponse
         case invalidData
         case jsonDecoding

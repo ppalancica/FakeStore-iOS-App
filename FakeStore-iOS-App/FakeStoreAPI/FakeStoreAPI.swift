@@ -18,13 +18,16 @@ final class FakeStoreAPI {
     //
     func getProducts(completion: @escaping ([Product]?, FakeStoreAPIError?) -> Void) {
         let productsUrlString = baseUrlString + "/" + "products"
-        let productsUrl = URL(string: productsUrlString)!
-        let urlRequest = URLRequest(url: productsUrl)
         
-        let task = URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        guard let productsUrl = URL(string: productsUrlString) else {
+            completion(nil, .invalidUrl)
+            return
+        }
+        
+        let task = URLSession.shared.dataTask(with: productsUrl) { data, response, error in
             // Check if there is no error
             guard error == nil else {
-                completion(nil, .invalidRequest)
+                completion(nil, .networkIssue)
                 return
             }
             
