@@ -84,7 +84,8 @@ extension ProductsViewController {
 private extension ProductsViewController {
     
     func fetchProducts() {
-        api.getProducts { products, error in
+        api.getProducts { [weak self] products, error in
+            guard let self else { return }
             if let products {
                 dump(products)
                 DispatchQueue.main.async {
